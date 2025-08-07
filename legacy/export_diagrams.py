@@ -33,12 +33,28 @@ DIAGRAM_NAMES = {
 def check_mmdc_installed():
     """Check if mermaid-cli is installed."""
     try:
-        subprocess.run(['mmdc', '--version'], 
-                      stdout=subprocess.PIPE, 
-                      stderr=subprocess.PIPE)
-        return True
+        # Try through npx (more reliable)
+        result = subprocess.run(['npx', '@mermaid-js/mermaid-cli', '--version'], 
+                              stdout=subprocess.PIPE, 
+                              stderr=subprocess.PIPE,
+                              text=True)
+        if result.returncode == 0:
+            return True
     except FileNotFoundError:
-        return False
+        pass
+    
+    try:
+        # Try mmdc directly as fallback
+        result = subprocess.run(['mmdc', '--version'], 
+                              stdout=subprocess.PIPE, 
+                              stderr=subprocess.PIPE,
+                              text=True)
+        if result.returncode == 0:
+            return True
+    except FileNotFoundError:
+        pass
+    
+    return False
 
 def extract_mermaid_diagrams(markdown_file):
     """Extract Mermaid diagrams from markdown file."""
@@ -59,17 +75,28 @@ def export_diagram(diagram_content, output_file):
         temp_path = temp.name
     
     try:
-        # Run mmdc to convert the diagram to PNG
+        # Use npx as primary method
         subprocess.run([
-            'mmdc',
+            'npx', '@mermaid-js/mermaid-cli',
             '-i', temp_path,
             '-o', output_file,
             '-b', 'transparent',
             '-w', '800'
         ], check=True)
         print(f"Exported: {output_file}")
-    except subprocess.CalledProcessError as e:
-        print(f"Error exporting diagram: {e}")
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        try:
+            # Fallback to mmdc
+            subprocess.run([
+                'mmdc',
+                '-i', temp_path,
+                '-o', output_file,
+                '-b', 'transparent',
+                '-w', '800'
+            ], check=True)
+            print(f"Exported: {output_file}")
+        except subprocess.CalledProcessError as e:
+            print(f"Error exporting diagram: {e}")
     finally:
         # Clean up the temporary file
         os.unlink(temp_path)

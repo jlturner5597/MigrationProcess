@@ -1,0 +1,40 @@
+gantt
+    title Surpass Migration Timeline
+    dateFormat  YYYY-MM-DD
+    axisFormat %b %d
+    
+    section Discovery (Pre-Sales)
+    Business Context Assessment       :discovery1, 2023-10-01, 14d
+    Assessment Delivery Requirements  :discovery2, after discovery1, 14d
+    Technical Environment Analysis    :discovery3, after discovery2, 14d
+    Architecture Vision Document      :discovery4, after discovery3, 7d
+    
+    section Detailed Design
+    Business Requirements Gathering   :design1, after discovery4, 21d
+    Center/Subject Structure          :design2, after design1, 10d
+    Dependency Review 1               :milestone, after design2, 0d
+    Item Authoring Structure          :design3, after design2, 14d
+    Dependency Review 2               :milestone, after design3, 0d
+    Test Creation Structure           :design4, after design3, 14d
+    Dependency Review 3               :milestone, after design4, 0d
+    Test Administration Flow          :design5, after design4, 10d
+    Dependency Review 4               :milestone, after design5, 0d
+    Reporting Structure               :design6, after design5, 10d
+    Migration Path Determination      :design7, after design6, 7d
+    Migration Runbook Creation        :design8, after design7, 14d
+    
+    section Build & Configure
+    Environment Setup                 :build1, after design8, 7d
+    Migration Script Development      :build2, after build1, 21d
+    Test Item Creation                :build3, after build2, 14d
+    
+    section QA & Validation
+    Manual Testing                    :qa1, after build3, 14d
+    Automated Testing                 :qa2, after build3, 14d
+    Dependency Validation             :qa3, after qa1, 7d
+    Validation Report                 :qa4, after qa3, 7d
+    
+    section Go-Live
+    Production Migration              :golive1, after qa4, 5d
+    Knowledge Transfer                :golive2, after golive1, 10d
+    Project Closure                   :golive3, after golive2, 5d

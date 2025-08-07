@@ -1,0 +1,98 @@
+graph TB
+    %% Define styles
+    classDef structure fill:#0078D7, color:white, stroke-width:2px
+    classDef authoring fill:#00B294, color:white, stroke-width:2px
+    classDef creation fill:#FFB900, color:black, stroke-width:2px
+    classDef admin fill:#E81123, color:white, stroke-width:2px
+    classDef reporting fill:#68217A, color:white, stroke-width:2px
+    classDef security fill:#107C10, color:white, stroke-width:2px
+    
+    %% Main Surpass modules
+    Structure["Center/Subject<br/>Structure"]
+    Authoring["Item<br/>Authoring"]
+    Creation["Test<br/>Creation"]
+    Admin["Test<br/>Administration"]
+    Delivery["Test<br/>Delivery"]
+    Reporting["Reporting"]
+    
+    %% Module components
+    subgraph "Center/Subject Structure"
+        Sites["Sites"]
+        Centers["Centers"]
+        Subjects["Subjects"]
+        Roles["Roles & Permissions"]
+        
+        Sites --- Centers
+        Centers --- Subjects
+        Sites --- Roles
+        Centers --- Roles
+        Subjects --- Roles
+    end
+    
+    subgraph "Item Authoring"
+        Banks["Item Banks"]
+        Metadata["Metadata"]
+        Media["Media"]
+        Workflow["Authoring Workflow"]
+        ItemTypes["Item Types"]
+        
+        Banks --- Metadata
+        Banks --- Media
+        Banks --- Workflow
+        Banks --- ItemTypes
+    end
+    
+    subgraph "Test Creation"
+        Forms["Test Forms"]
+        Blueprints["Blueprints"]
+        Settings["Test Settings"]
+        
+        Forms --- Blueprints
+        Forms --- Settings
+    end
+    
+    subgraph "Test Administration"
+        Schedule["Scheduling"]
+        KeyCodes["KeyCodes"]
+        Assignments["Assignments"]
+        
+        Schedule --- KeyCodes
+        Schedule --- Assignments
+    end
+    
+    subgraph "Test Delivery"
+        SecureClient["SecureClient"]
+        WebDelivery["Web Delivery"]
+        Paper["Paper Delivery"]
+        
+        SecureClient --- WebDelivery
+        WebDelivery --- Paper
+    end
+    
+    subgraph "Reporting"
+        Results["Results"]
+        Analytics["Analytics"]
+        Exports["Exports"]
+        
+        Results --- Analytics
+        Results --- Exports
+    end
+    
+    %% Module relationships
+    Structure --> Authoring
+    Structure --> Creation
+    Structure --> Admin
+    Structure --> Reporting
+    
+    Authoring --> Creation
+    Creation --> Admin
+    Admin --> Delivery
+    Delivery --> Reporting
+    
+    %% Apply classes
+    class Structure,Sites,Centers,Subjects,Roles structure
+    class Authoring,Banks,Metadata,Media,Workflow,ItemTypes authoring
+    class Creation,Forms,Blueprints,Settings creation
+    class Admin,Schedule,KeyCodes,Assignments admin
+    class Delivery,SecureClient,WebDelivery,Paper admin
+    class Reporting,Results,Analytics,Exports reporting

@@ -1,0 +1,79 @@
+flowchart TB
+    %% Define styles
+    classDef source fill:#0078D7, color:white, stroke-width:2px
+    classDef transform fill:#00B294, color:white, stroke-width:2px
+    classDef target fill:#FFB900, color:black, stroke-width:2px
+    classDef validation fill:#E81123, color:white, stroke-width:2px
+    
+    %% Source systems
+    subgraph SourceSystems["Source Systems"]
+        direction TB
+        Legacy["Legacy Assessment System"]
+        ItemBank["Existing Item Bank"]
+        UserDB["User Database"]
+        Results["Historical Results"]
+    end
+    
+    %% Transformation layer
+    subgraph TransformationLayer["Transformation Layer"]
+        direction TB
+        Extract["Data Extraction"]
+        Transform["Data Transformation"]
+        Validate["Data Validation"]
+        Load["Data Loading"]
+    end
+    
+    %% Surpass modules
+    subgraph SurpassModules["Surpass Platform"]
+        direction TB
+        Structure["Center/Subject Structure"]
+        ItemBanking["Item Banking"]
+        TestCreation["Test Creation"]
+        TestAdmin["Test Administration"]
+        Reporting["Reporting"]
+    end
+    
+    %% Data flows
+    Legacy --> Extract
+    ItemBank --> Extract
+    UserDB --> Extract
+    Results --> Extract
+    
+    Extract --> Transform
+    Transform --> Validate
+    Validate --> Load
+    
+    Load --> Structure
+    Load --> ItemBanking
+    Load --> TestCreation
+    Load --> TestAdmin
+    Load --> Reporting
+    
+    %% Validation flows
+    subgraph ValidationProcesses["Validation Processes"]
+        direction TB
+        ManualQA["Manual QA"]
+        AutomatedTests["Automated Tests"]
+        UserAcceptance["User Acceptance Testing"]
+    end
+    
+    Structure --> ManualQA
+    ItemBanking --> ManualQA
+    TestCreation --> ManualQA
+    TestAdmin --> ManualQA
+    Reporting --> ManualQA
+    
+    Structure --> AutomatedTests
+    ItemBanking --> AutomatedTests
+    TestCreation --> AutomatedTests
+    TestAdmin --> AutomatedTests
+    Reporting --> AutomatedTests
+    
+    ManualQA --> UserAcceptance
+    AutomatedTests --> UserAcceptance
+    
+    %% Apply classes
+    class Legacy,ItemBank,UserDB,Results source
+    class Extract,Transform,Validate,Load transform
+    class Structure,ItemBanking,TestCreation,TestAdmin,Reporting target
+    class ManualQA,AutomatedTests,UserAcceptance validation

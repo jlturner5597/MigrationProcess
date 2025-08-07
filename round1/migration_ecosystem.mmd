@@ -1,0 +1,60 @@
+graph TB
+    subgraph "Migration Process Ecosystem"
+        subgraph "Source Systems"
+            S1[Legacy System 1]
+            S2[Legacy System 2]
+            S3[Legacy System 3]
+        end
+        
+        subgraph "Migration Engine"
+            E1[Extract Module]
+            E2[Transform Module]
+            E3[Load Module]
+            E4[Validation Module]
+            
+            CLI[Interactive CLI]
+            Config[Configuration Manager]
+            Exception[Exception Handler]
+            
+            E1 --> E2
+            E2 --> E3
+            E3 --> E4
+            
+            CLI --> Config
+            Config --> E1
+            Exception -.-> E1
+            Exception -.-> E2
+            Exception -.-> E3
+            Exception -.-> E4
+        end
+        
+        subgraph "Target System"
+            T1[Surpass Platform]
+            T2[Item Bank]
+            T3[Test Assembly]
+            T4[Delivery System]
+            
+            T1 --- T2
+            T1 --- T3
+            T1 --- T4
+        end
+        
+        S1 --> E1
+        S2 --> E1
+        S3 --> E1
+        
+        E3 --> T1
+        E3 --> T2
+    end
+    
+    %% Define styles
+    classDef source fill:#0078D7, color:white, stroke-width:2px
+    classDef engine fill:#00B294, color:white, stroke-width:2px
+    classDef target fill:#FFB900, color:black, stroke-width:2px
+    classDef cli fill:#E81123, color:white, stroke-width:2px
+    
+    %% Apply styles
+    class S1,S2,S3 source
+    class E1,E2,E3,E4,Config,Exception engine
+    class T1,T2,T3,T4 target
+    class CLI cli

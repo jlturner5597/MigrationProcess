@@ -1,0 +1,100 @@
+flowchart TD
+    %% Define the nodes with Surpass branding colors
+    classDef structure fill:#0078D7, color:white, stroke-width:2px
+    classDef review fill:#107C10, color:white, stroke-width:2px, stroke-dasharray: 5 5
+    classDef migration fill:#FFB900, color:black, stroke-width:2px
+    
+    %% Main structure planning nodes
+    Start([Start Structure Planning])
+    CS[Center/Subject Structure]
+    IA[Item Authoring Structure]
+    TC[Test Creation Structure]
+    TA[Test Administration Flow]
+    RP[Reporting Structure]
+    MP[Migration Path Determination]
+    Execute[Execute Migration]
+    End([End Structure Planning])
+    
+    %% Dependency review nodes
+    DR1{Dependency Review}
+    DR2{Dependency Review}
+    DR3{Dependency Review}
+    DR4{Dependency Review}
+    
+    %% Flow connections
+    Start --> CS
+    CS --> DR1
+    DR1 -->|Pass| IA
+    DR1 -->|Revise| CS
+    
+    IA --> DR2
+    DR2 -->|Pass| TC
+    DR2 -->|Revise| IA
+    
+    TC --> DR3
+    DR3 -->|Pass| TA
+    DR3 -->|Revise| TC
+    
+    TA --> DR4
+    DR4 -->|Pass| RP
+    DR4 -->|Revise| TA
+    
+    RP --> MP
+    MP --> Execute
+    Execute --> End
+    
+    %% Subgraphs for each structure area
+    subgraph "Center/Subject Structure"
+        CS1[Hierarchical Organization]
+        CS2[Site/Center/Subject Relationships]
+        CS3[Organizational Boundaries]
+        
+        CS1 --- CS2 --- CS3
+    end
+    
+    subgraph "Item Authoring Structure"
+        IA1[Bank Structure]
+        IA2[Item Metadata Mapping]
+        IA3[Workflow Configuration]
+        IA4[Media Handling]
+        
+        IA1 --- IA2 --- IA3 --- IA4
+    end
+    
+    subgraph "Test Creation Structure"
+        TC1[Test Settings]
+        TC2[Development Workflow]
+        TC3[Blueprint Mapping]
+        
+        TC1 --- TC2 --- TC3
+    end
+    
+    subgraph "Test Administration"
+        TA1[Scheduling Approach]
+        TA2[Delivery Settings]
+        TA3[Security Requirements]
+        
+        TA1 --- TA2 --- TA3
+    end
+    
+    subgraph "Reporting Structure"
+        RP1[Results Processing]
+        RP2[Analytics Requirements]
+        RP3[Data Export Needs]
+        
+        RP1 --- RP2 --- RP3
+    end
+    
+    subgraph "Migration Path"
+        MP1[API Utilization]
+        MP2[UI Import Features]
+        MP3[Manual Input Requirements]
+        MP4[Data Transformation]
+        
+        MP1 --- MP2 --- MP3 --- MP4
+    end
+    
+    %% Apply classes
+    class CS,IA,TC,TA,RP structure
+    class DR1,DR2,DR3,DR4 review
+    class MP,Execute migration

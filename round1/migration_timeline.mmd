@@ -1,0 +1,29 @@
+gantt
+    title Migration Process Timeline
+    dateFormat  YYYY-MM-DD
+    axisFormat %b %d
+    
+    section Discovery
+    Architecture Vision       :discovery1, 2023-10-01, 30d
+    Stakeholder Meetings      :discovery2, after discovery1, 15d
+    Requirements Gathering    :discovery3, after discovery2, 20d
+    
+    section Design
+    Business Analysis         :design1, after discovery3, 25d
+    Data Mapping              :design2, after design1, 20d
+    Integration Planning      :design3, after design2, 15d
+    
+    section Build
+    Environment Setup         :build1, after design3, 10d
+    Migration Scripts         :build2, after build1, 25d
+    Test Items Creation       :build3, after build2, 15d
+    
+    section QA
+    Manual Testing            :qa1, after build3, 20d
+    Automated Testing         :qa2, after qa1, 15d
+    Performance Testing       :qa3, after qa2, 10d
+    
+    section Go-Live
+    User Training             :golive1, after qa3, 15d
+    Production Deployment     :golive2, after golive1, 5d
+    Handoff & Documentation   :golive3, after golive2, 10d

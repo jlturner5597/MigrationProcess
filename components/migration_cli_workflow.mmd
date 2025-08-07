@@ -1,0 +1,62 @@
+sequenceDiagram
+    participant SE as Solutions Engineer
+    participant CLI as Interactive CLI
+    participant Config as Config Manager
+    participant Migration as Migration Engine
+    participant Surpass as Surpass Platform
+    
+    SE->>CLI: Start migration process
+    activate CLI
+    Note over CLI: Color-coded menu<br/>reduces cognitive load
+    
+    CLI->>SE: Request authentication
+    SE->>CLI: Provide credentials
+    CLI->>CLI: Validate credentials
+    
+    CLI->>SE: Select migration type
+    SE->>CLI: Choose structure type
+    
+    CLI->>Config: List available configs
+    activate Config
+    Config-->>CLI: Return configs (no extensions)
+    CLI->>SE: Display config options
+    SE->>CLI: Select config
+    
+    CLI->>Config: Load selected config
+    Config-->>CLI: Config loaded
+    deactivate Config
+    
+    CLI->>SE: Request source system details
+    SE->>CLI: Provide connection parameters
+    
+    CLI->>SE: Request target structure details
+    SE->>CLI: Provide structure mapping
+    
+    CLI->>Migration: Initialize migration
+    activate Migration
+    Migration->>Config: Get configuration
+    Config-->>Migration: Configuration details
+    
+    Migration->>Migration: Validate mapping
+    
+    alt Validation Successful
+        Migration->>Surpass: Begin data transfer
+        activate Surpass
+        Surpass-->>Migration: Transfer progress updates
+        Migration-->>CLI: Display progress
+        CLI-->>SE: Show real-time progress
+        Surpass-->>Migration: Transfer complete
+        deactivate Surpass
+        
+        Migration->>Migration: Generate validation report
+        Migration-->>CLI: Migration complete with report
+        CLI-->>SE: Display results and validation summary
+    else Validation Failed
+        Migration-->>CLI: Validation errors
+        CLI-->>SE: Display validation issues
+        SE->>CLI: Adjust mapping
+        CLI->>Migration: Retry with updated mapping
+    end
+    
+    deactivate Migration
+    deactivate CLI

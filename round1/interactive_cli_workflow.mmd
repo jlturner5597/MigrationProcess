@@ -1,0 +1,50 @@
+sequenceDiagram
+    participant User
+    participant CLI as Interactive CLI
+    participant Config as Config Manager
+    participant Migration as Migration Engine
+    participant DB as Database
+    
+    User->>CLI: Start migration
+    activate CLI
+    Note over CLI: Color-coded menu<br/>reduces cognitive load
+    
+    CLI->>User: Request authentication
+    User->>CLI: Provide credentials
+    CLI->>CLI: Validate credentials
+    
+    CLI->>Config: List available configs
+    activate Config
+    Config-->>CLI: Return configs (no extensions)
+    CLI->>User: Display config options
+    User->>CLI: Select config
+    
+    CLI->>Config: Load selected config
+    Config-->>CLI: Config loaded
+    deactivate Config
+    
+    CLI->>User: Request migration parameters
+    User->>CLI: Provide parameters
+    
+    CLI->>Migration: Initialize migration
+    activate Migration
+    Migration->>Config: Get configuration
+    Config-->>Migration: Configuration details
+    
+    Migration->>DB: Connect to source
+    DB-->>Migration: Connection established
+    Migration->>DB: Extract data
+    DB-->>Migration: Data extracted
+    
+    Migration->>Migration: Transform data
+    
+    Migration->>DB: Connect to target
+    DB-->>Migration: Connection established
+    Migration->>DB: Load data
+    DB-->>Migration: Data loaded
+    
+    Migration-->>CLI: Migration complete
+    deactivate Migration
+    
+    CLI-->>User: Display results
+    deactivate CLI

@@ -1,0 +1,56 @@
+classDiagram
+    %% Define the classes
+    class MigrationProcess {
+        +Discovery
+        +Design
+        +Build
+        +QA
+        +GoLive
+        -ReviewLoop()
+        -HandleExceptions()
+    }
+    
+    class InteractiveCLI {
+        +ColorCodedMenus
+        +ReducedCognitiveLoad
+        +AuthenticationFlow()
+        +FilterParameters()
+    }
+    
+    class ConfigurationManager {
+        +ConfigFiles[]
+        -ValidateConfig()
+        +ListConfigs()
+        +ApplyConfig()
+    }
+    
+    class DataMigration {
+        +SourceSystems[]
+        +TargetSystems[]
+        +MigrationScripts[]
+        -ValidateData()
+        +ExecuteMigration()
+        +RollbackChanges()
+    }
+    
+    class ExceptionHandler {
+        +LogExceptions()
+        +HandleGracefully()
+        +NotifyAdmins()
+    }
+    
+    class TestSuite {
+        +AutomatedTests[]
+        +ManualTests[]
+        +RunTests()
+        +GenerateReport()
+    }
+    
+    %% Define the relationships
+    MigrationProcess --> InteractiveCLI : uses
+    MigrationProcess --> ConfigurationManager : manages
+    MigrationProcess --> DataMigration : executes
+    MigrationProcess --> TestSuite : validates with
+    DataMigration --> ExceptionHandler : handles errors with
+    InteractiveCLI --> ConfigurationManager : selects
+    ConfigurationManager --> DataMigration : configures

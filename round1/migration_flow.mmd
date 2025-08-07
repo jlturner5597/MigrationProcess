@@ -1,0 +1,51 @@
+flowchart LR
+    %% Define the nodes with Surpass branding colors
+    classDef discovery fill:#0078D7, color:white, stroke-width:2px
+    classDef design fill:#00B294, color:white, stroke-width:2px
+    classDef build fill:#FFB900, color:black, stroke-width:2px
+    classDef qa fill:#E81123, color:white, stroke-width:2px
+    classDef golive fill:#68217A, color:white, stroke-width:2px
+    classDef review fill:#107C10, color:white, stroke-width:2px, stroke-dasharray: 5 5
+    classDef interactive fill:#00B294, color:white, stroke-width:2px, stroke-dasharray: 5 5
+    
+    %% Main process flow
+    Discovery["Discovery<br/>Architecture Vision<br/><i>Pre-Sales Phase</i>"]
+    Design["Detailed Design<br/>& Planning<br/><i>Business • Data • Integration</i>"]
+    Build["Build & Configure<br/><i>Migration Scripts • Test Items</i>"]
+    QA["QA & Validation<br/><i>Manual + Automated</i>"]
+    GoLive["Go-Live & Handoff<br/><i>Production Deployment</i>"]
+    
+    %% Interactive elements
+    CLI["Interactive CLI<br/>Color-Coded Menus"]
+    Auth["Authentication<br/>Workflows"]
+    Config["Migration<br/>Configurations"]
+    
+    %% Review loop
+    Review["Dependency<br/>Review Loop"]
+    
+    %% Connections
+    Discovery --> |"Kick-off<br/>BRD"| Design
+    Design --> |"Solution &<br/>Migration<br/>Runbook"| Build
+    Build --> |"Data Loads<br/>& Config"| QA
+    QA --> |"User<br/>Sign-off"| GoLive
+    
+    %% Interactive elements connections
+    Design -.-> CLI
+    CLI -.-> Auth
+    Auth -.-> Config
+    Config -.-> Build
+    
+    %% Review loop connections
+    Design -.-> Review
+    Build -.-> Review
+    QA -.-> Review
+    Review -.-> |"Adjust"| Design
+    
+    %% Apply classes
+    class Discovery discovery
+    class Design design
+    class Build build
+    class QA qa
+    class GoLive golive
+    class Review review
+    class CLI,Auth,Config interactive

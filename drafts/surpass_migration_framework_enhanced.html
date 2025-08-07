@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>surpass_migration_framework_enhanced.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="surpass-migration-framework">Surpass Migration Framework</h1>
+<h2 id="executive-summary">Executive Summary</h2>
+<p>This document outlines the Surpass Migration Framework - a structured yet adaptable approach to assessment platform migrations. Built on real-world implementation experience and TOGAF principles, this framework balances the art and science of migration planning to ensure successful outcomes for diverse customer needs.</p>
+<h2 id="migration-lifecycle-overview">Migration Lifecycle Overview</h2>
+<p>The Surpass Migration Framework follows a continuous, iterative approach with dependency reviews at key transition points. This ensures alignment across all Surpass modules and integration points while maintaining flexibility to adapt to customer-specific requirements.</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    %% Define the nodes with Surpass branding colors
+    classDef discovery fill:#0078D7, color:white, stroke-width:2px
+    classDef design fill:#00B294, color:white, stroke-width:2px
+    classDef build fill:#FFB900, color:black, stroke-width:2px
+    classDef qa fill:#E81123, color:white, stroke-width:2px
+    classDef golive fill:#68217A, color:white, stroke-width:2px
+    classDef review fill:#107C10, color:white, stroke-width:2px, stroke-dasharray: 5 5
+    
+    %% Main process flow
+    Discovery["Discovery &<br/>Architecture Vision<br/><i>Pre-Sales Phase</i>"]
+    Design["Detailed Design<br/>& Planning<br/><i>Post-Contract</i>"]
+    Build["Build &<br/>Configure<br/><i>Implementation</i>"]
+    QA["QA &<br/>Validation<br/><i>Testing</i>"]
+    GoLive["Go-Live &<br/>Handoff<br/><i>Production</i>"]
+    
+    %% Dependency review nodes
+    DR1["Dependency<br/>Review"]
+    DR2["Dependency<br/>Review"]
+    DR3["Dependency<br/>Review"]
+    DR4["Dependency<br/>Review"]
+    
+    %% Connections for main flow
+    Discovery --> |"Contract<br/>Signing"| Design
+    Design --> |"Migration<br/>Runbook"| Build
+    Build --> |"Ready<br/>Environment"| QA
+    QA --> |"Customer<br/>Sign-off"| GoLive
+    
+    %% Connections for dependency reviews
+    Design --> DR1
+    DR1 --> Design
+    Design --> DR2
+    DR2 --> Design
+    Design --> DR3
+    DR3 --> Design
+    Design --> DR4
+    DR4 --> Design
+    
+    %% Apply classes
+    class Discovery discovery
+    class Design design
+    class Build build
+    class QA qa
+    class GoLive golive
+    class DR1,DR2,DR3,DR4 review
+</div></code></pre>
+<h2 id="phase-1-discovery--architecture-vision-pre-sales">Phase 1: Discovery &amp; Architecture Vision (Pre-Sales)</h2>
+<p>During pre-sales engagement, Solutions Engineers establish a high-level understanding of customer needs and technical landscape:</p>
+<pre><code class="language-mermaid"><div class="mermaid">mindmap
+    root((Pre-Sales<br/>Discovery))
+        Business Context
+            ::icon(fa fa-building)
+            General Background
+            Business Processes
+            Program Scale
+                Items
+                Candidates
+                Exams
+                Centers
+            Development Resources
+        Content Requirements
+            ::icon(fa fa-file-text)
+            Item Types
+            Media Usage
+            Exam Classification
+                High Stakes
+                Low Stakes
+                OSCE
+                Digital/Paper
+            Test Structure
+                Fixed Form
+                Dynamic
+                LOFT
+        Delivery Requirements
+            ::icon(fa fa-laptop)
+            Delivery Platform
+                Surpass
+                External Vendor
+            Delivery Method
+                Web Delivery
+                SecureClient
+                SecureBrowser
+            Proctoring
+                Live
+                Record & Review
+                None
+            Test Centers
+                Internal
+                External Network
+        Technical Requirements
+            ::icon(fa fa-cogs)
+            Integration Needs
+            Surpass Usage Model
+                Item Banking
+                End-to-End
+                University Model
+            Hosting Model
+                Shared Instance
+                Dedicated Instance
+            Gap Development
+</div></code></pre>
+<h3 id="business-context-assessment">Business Context Assessment</h3>
+<ul>
+<li>General background of the prospect</li>
+<li>High-level overview of business processes</li>
+<li>Program scale (items, candidates, exams, centers)</li>
+<li>Available development resources</li>
+</ul>
+<h3 id="assessment-delivery-requirements">Assessment Delivery Requirements</h3>
+<ul>
+<li>Content types and item formats</li>
+<li>Media usage requirements</li>
+<li>Exam classification (stakes, delivery method)</li>
+<li>Dynamic vs. fixed form requirements</li>
+</ul>
+<h3 id="technical-environment-analysis">Technical Environment Analysis</h3>
+<ul>
+<li>Delivery method (Surpass or external vendor)</li>
+<li>Web Delivery vs. SecureClient/SecureBrowser</li>
+<li>Proctoring requirements</li>
+<li>Test center network needs</li>
+<li>Integration requirements</li>
+<li>Hosting requirements (shared instance feasibility)</li>
+<li>Development needs for gap coverage</li>
+</ul>
+<h3 id="outcome-architecture-vision-document">Outcome: Architecture Vision Document</h3>
+<ul>
+<li>High-level migration strategy</li>
+<li>Preliminary timeline and resource requirements</li>
+<li>Initial risk assessment</li>
+</ul>
+<h2 id="phase-2-detailed-design--planning">Phase 2: Detailed Design &amp; Planning</h2>
+<p>After contract signing, the Solutions Engineer transitions to implementation planning with detailed discovery:</p>
+<h3 id="business-requirements-gathering">Business Requirements Gathering</h3>
+<ul>
+<li>Complete business requirements documentation</li>
+<li>Full inventory of data for migration</li>
+<li>Current state process mapping</li>
+<li>Future state process mapping</li>
+</ul>
+<h3 id="surpass-structure-planning">Surpass Structure Planning</h3>
+<p>The structure planning process is iterative, with dependency reviews after each major component:</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    %% Define the nodes with Surpass branding colors
+    classDef structure fill:#0078D7, color:white, stroke-width:2px
+    classDef review fill:#107C10, color:white, stroke-width:2px, stroke-dasharray: 5 5
+    classDef migration fill:#FFB900, color:black, stroke-width:2px
+    
+    %% Main structure planning nodes
+    Start([Start Structure Planning])
+    CS[Center/Subject Structure]
+    IA[Item Authoring Structure]
+    TC[Test Creation Structure]
+    TA[Test Administration Flow]
+    RP[Reporting Structure]
+    MP[Migration Path Determination]
+    Execute[Execute Migration]
+    End([End Structure Planning])
+    
+    %% Dependency review nodes
+    DR1{Dependency Review}
+    DR2{Dependency Review}
+    DR3{Dependency Review}
+    DR4{Dependency Review}
+    
+    %% Flow connections
+    Start --> CS
+    CS --> DR1
+    DR1 -->|Pass| IA
+    DR1 -->|Revise| CS
+    
+    IA --> DR2
+    DR2 -->|Pass| TC
+    DR2 -->|Revise| IA
+    
+    TC --> DR3
+    DR3 -->|Pass| TA
+    DR3 -->|Revise| TC
+    
+    TA --> DR4
+    DR4 -->|Pass| RP
+    DR4 -->|Revise| TA
+    
+    RP --> MP
+    MP --> Execute
+    Execute --> End
+    
+    %% Apply classes
+    class CS,IA,TC,TA,RP structure
+    class DR1,DR2,DR3,DR4 review
+    class MP,Execute migration
+</div></code></pre>
+<ol>
+<li>
+<p><strong>Center/Subject Structure Design</strong></p>
+<ul>
+<li>Hierarchical organization mapping</li>
+<li>Site/Center/Subject relationships</li>
+<li>Organizational boundaries</li>
+</ul>
+</li>
+<li>
+<p><strong>Item Authoring Structure</strong></p>
+<ul>
+<li>Bank structure design</li>
+<li>Item metadata mapping</li>
+<li>Workflow configuration</li>
+<li>Media handling approach</li>
+</ul>
+</li>
+<li>
+<p><strong>Test Creation Structure</strong></p>
+<ul>
+<li>Test settings configuration</li>
+<li>Development workflow establishment</li>
+<li>Blueprint mapping</li>
+</ul>
+</li>
+<li>
+<p><strong>Test Administration Flow</strong></p>
+<ul>
+<li>Scheduling approach</li>
+<li>Delivery settings</li>
+<li>Security requirements</li>
+</ul>
+</li>
+<li>
+<p><strong>Reporting Structure</strong></p>
+<ul>
+<li>Results processing</li>
+<li>Analytics requirements</li>
+<li>Data export needs</li>
+</ul>
+</li>
+</ol>
+<h3 id="dependency-reviews">Dependency Reviews</h3>
+<p>Dependency reviews are critical checkpoints throughout the migration process:</p>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+    class DependencyReview {
+        +ReviewID
+        +Phase
+        +Date
+        +Participants[]
+        +ConductReview()
+        +DocumentFindings()
+        +AssignActions()
+    }
+    
+    class DataCompatibility {
+        +StructureValidation()
+        +RequiredFieldsCheck()
+        +RelationshipVerification()
+        +MetadataConsistencyCheck()
+    }
+    
+    class ProcessAlignment {
+        +WorkflowValidation()
+        +GapAnalysis()
+        +UserExperienceReview()
+        +CrossModuleProcessCheck()
+    }
+    
+    class IntegrationViability {
+        +IntegrationPointVerification()
+        +DataTransformationCheck()
+        +SecurityRequirementValidation()
+        +APICompatibilityCheck()
+    }
+    
+    class PerformanceConsiderations {
+        +LoadTesting()
+        +BottleneckIdentification()
+        +ScalabilityAssessment()
+        +ResponseTimeValidation()
+    }
+    
+    class SurpassModule {
+        <<Interface>>
+        +ModuleName
+        +Version
+        +Dependencies[]
+        +ValidateCompatibility()
+    }
+    
+    DependencyReview --> DataCompatibility : evaluates
+    DependencyReview --> ProcessAlignment : evaluates
+    DependencyReview --> IntegrationViability : evaluates
+    DependencyReview --> PerformanceConsiderations : evaluates
+    
+    DependencyReview --> SurpassModule : validates
+</div></code></pre>
+<p>Each dependency review should address:</p>
+<ol>
+<li>
+<p><strong>Data Compatibility</strong></p>
+<ul>
+<li>Is data structured appropriately for all modules?</li>
+<li>Are all required fields populated?</li>
+<li>Are relationships preserved?</li>
+</ul>
+</li>
+<li>
+<p><strong>Process Alignment</strong></p>
+<ul>
+<li>Do configured workflows support business requirements?</li>
+<li>Are there process gaps or conflicts?</li>
+<li>Is the user experience optimized?</li>
+</ul>
+</li>
+<li>
+<p><strong>Integration Viability</strong></p>
+<ul>
+<li>Are all integration points properly defined?</li>
+<li>Is data transformation adequate?</li>
+<li>Are security requirements satisfied?</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance Considerations</strong></p>
+<ul>
+<li>Will the design support expected load?</li>
+<li>Are there potential bottlenecks?</li>
+<li>Is scalability addressed?</li>
+</ul>
+</li>
+</ol>
+<h3 id="migration-path-determination">Migration Path Determination</h3>
+<ul>
+<li>API utilization assessment</li>
+<li>UI import feature evaluation</li>
+<li>Manual input requirements</li>
+<li>Data transformation approach</li>
+</ul>
+<h3 id="outcome-migration-runbook">Outcome: Migration Runbook</h3>
+<ul>
+<li>Detailed migration plan</li>
+<li>Configuration specifications</li>
+<li>Data mapping documentation</li>
+<li>Validation criteria</li>
+</ul>
+<h2 id="phase-3-build--configure">Phase 3: Build &amp; Configure</h2>
+<p>The execution phase where planning becomes reality:</p>
+<h3 id="surpass-module-relationships">Surpass Module Relationships</h3>
+<p>Understanding the relationships between Surpass modules is critical for successful migration:</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TB
+    %% Define styles
+    classDef structure fill:#0078D7, color:white, stroke-width:2px
+    classDef authoring fill:#00B294, color:white, stroke-width:2px
+    classDef creation fill:#FFB900, color:black, stroke-width:2px
+    classDef admin fill:#E81123, color:white, stroke-width:2px
+    classDef reporting fill:#68217A, color:white, stroke-width:2px
+    
+    %% Main Surpass modules
+    Structure["Center/Subject<br/>Structure"]
+    Authoring["Item<br/>Authoring"]
+    Creation["Test<br/>Creation"]
+    Admin["Test<br/>Administration"]
+    Delivery["Test<br/>Delivery"]
+    Reporting["Reporting"]
+    
+    %% Module relationships
+    Structure --> Authoring
+    Structure --> Creation
+    Structure --> Admin
+    Structure --> Reporting
+    
+    Authoring --> Creation
+    Creation --> Admin
+    Admin --> Delivery
+    Delivery --> Reporting
+    
+    %% Apply classes
+    class Structure structure
+    class Authoring authoring
+    class Creation creation
+    class Admin,Delivery admin
+    class Reporting reporting
+</div></code></pre>
+<h3 id="environment-setup">Environment Setup</h3>
+<ul>
+<li>Instance configuration</li>
+<li>User setup</li>
+<li>Integration establishment</li>
+</ul>
+<h3 id="migration-script-development">Migration Script Development</h3>
+<ul>
+<li>Data extraction from source systems</li>
+<li>Transformation logic implementation</li>
+<li>Load procedures creation</li>
+</ul>
+<h3 id="interactive-cli-workflow">Interactive CLI Workflow</h3>
+<p>An interactive CLI with color-coded menus reduces cognitive load during migration execution:</p>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant SE as Solutions Engineer
+    participant CLI as Interactive CLI
+    participant Config as Config Manager
+    participant Migration as Migration Engine
+    participant Surpass as Surpass Platform
+    
+    SE->>CLI: Start migration process
+    activate CLI
+    Note over CLI: Color-coded menu<br/>reduces cognitive load
+    
+    CLI->>SE: Request authentication
+    SE->>CLI: Provide credentials
+    CLI->>CLI: Validate credentials
+    
+    CLI->>SE: Select migration type
+    SE->>CLI: Choose structure type
+    
+    CLI->>Config: List available configs
+    activate Config
+    Config-->>CLI: Return configs (no extensions)
+    CLI->>SE: Display config options
+    SE->>CLI: Select config
+    
+    CLI->>Config: Load selected config
+    Config-->>CLI: Config loaded
+    deactivate Config
+    
+    CLI->>SE: Request source system details
+    SE->>CLI: Provide connection parameters
+    
+    CLI->>SE: Request target structure details
+    SE->>CLI: Provide structure mapping
+    
+    CLI->>Migration: Initialize migration
+    activate Migration
+    Migration->>Config: Get configuration
+    Config-->>Migration: Configuration details
+    
+    Migration->>Migration: Validate mapping
+    
+    alt Validation Successful
+        Migration->>Surpass: Begin data transfer
+        activate Surpass
+        Surpass-->>Migration: Transfer progress updates
+        Migration-->>CLI: Display progress
+        CLI-->>SE: Show real-time progress
+        Surpass-->>Migration: Transfer complete
+        deactivate Surpass
+        
+        Migration->>Migration: Generate validation report
+        Migration-->>CLI: Migration complete with report
+        CLI-->>SE: Display results and validation summary
+    else Validation Failed
+        Migration-->>CLI: Validation errors
+        CLI-->>SE: Display validation issues
+        SE->>CLI: Adjust mapping
+        CLI->>Migration: Retry with updated mapping
+    end
+    
+    deactivate Migration
+    deactivate CLI
+</div></code></pre>
+<h3 id="test-item-creation">Test Item Creation</h3>
+<ul>
+<li>Sample content migration</li>
+<li>Validation of item behavior</li>
+<li>Media handling verification</li>
+</ul>
+<h3 id="outcome-migration-ready-environment">Outcome: Migration-Ready Environment</h3>
+<ul>
+<li>Configured Surpass instance</li>
+<li>Validated migration scripts</li>
+<li>Test data verification</li>
+</ul>
+<h2 id="phase-4-qa--validation">Phase 4: QA &amp; Validation</h2>
+<p>Comprehensive testing to ensure migration success:</p>
+<h3 id="data-flow-validation">Data Flow Validation</h3>
+<p>The migration data flow must be thoroughly validated:</p>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TB
+    %% Define styles
+    classDef source fill:#0078D7, color:white, stroke-width:2px
+    classDef transform fill:#00B294, color:white, stroke-width:2px
+    classDef target fill:#FFB900, color:black, stroke-width:2px
+    classDef validation fill:#E81123, color:white, stroke-width:2px
+    
+    %% Source systems
+    subgraph SourceSystems["Source Systems"]
+        direction TB
+        Legacy["Legacy Assessment System"]
+        ItemBank["Existing Item Bank"]
+        UserDB["User Database"]
+        Results["Historical Results"]
+    end
+    
+    %% Transformation layer
+    subgraph TransformationLayer["Transformation Layer"]
+        direction TB
+        Extract["Data Extraction"]
+        Transform["Data Transformation"]
+        Validate["Data Validation"]
+        Load["Data Loading"]
+    end
+    
+    %% Surpass modules
+    subgraph SurpassModules["Surpass Platform"]
+        direction TB
+        Structure["Center/Subject Structure"]
+        ItemBanking["Item Banking"]
+        TestCreation["Test Creation"]
+        TestAdmin["Test Administration"]
+        Reporting["Reporting"]
+    end
+    
+    %% Data flows
+    Legacy --> Extract
+    ItemBank --> Extract
+    UserDB --> Extract
+    Results --> Extract
+    
+    Extract --> Transform
+    Transform --> Validate
+    Validate --> Load
+    
+    Load --> Structure
+    Load --> ItemBanking
+    Load --> TestCreation
+    Load --> TestAdmin
+    Load --> Reporting
+    
+    %% Validation flows
+    subgraph ValidationProcesses["Validation Processes"]
+        direction TB
+        ManualQA["Manual QA"]
+        AutomatedTests["Automated Tests"]
+        UserAcceptance["User Acceptance Testing"]
+    end
+    
+    Structure --> ManualQA
+    ItemBanking --> ManualQA
+    TestCreation --> ManualQA
+    TestAdmin --> ManualQA
+    Reporting --> ManualQA
+    
+    Structure --> AutomatedTests
+    ItemBanking --> AutomatedTests
+    TestCreation --> AutomatedTests
+    TestAdmin --> AutomatedTests
+    Reporting --> AutomatedTests
+    
+    ManualQA --> UserAcceptance
+    AutomatedTests --> UserAcceptance
+    
+    %% Apply classes
+    class Legacy,ItemBank,UserDB,Results source
+    class Extract,Transform,Validate,Load transform
+    class Structure,ItemBanking,TestCreation,TestAdmin,Reporting target
+    class ManualQA,AutomatedTests,UserAcceptance validation
+</div></code></pre>
+<h3 id="manual-testing">Manual Testing</h3>
+<ul>
+<li>User acceptance testing</li>
+<li>Process validation</li>
+<li>Configuration verification</li>
+</ul>
+<h3 id="automated-testing">Automated Testing</h3>
+<ul>
+<li>Data integrity validation</li>
+<li>Performance assessment</li>
+<li>Integration testing</li>
+</ul>
+<h3 id="dependency-validation">Dependency Validation</h3>
+<ul>
+<li>Cross-module functionality testing</li>
+<li>End-to-end process validation</li>
+</ul>
+<h3 id="outcome-validation-report">Outcome: Validation Report</h3>
+<ul>
+<li>Test results documentation</li>
+<li>Issue resolution tracking</li>
+<li>Customer sign-off documentation</li>
+</ul>
+<h2 id="phase-5-go-live--handoff">Phase 5: Go-Live &amp; Handoff</h2>
+<p>Final deployment and transition to operations:</p>
+<h3 id="production-migration">Production Migration</h3>
+<ul>
+<li>Full data migration execution</li>
+<li>Final verification</li>
+<li>Performance monitoring</li>
+</ul>
+<h3 id="knowledge-transfer">Knowledge Transfer</h3>
+<ul>
+<li>Documentation delivery</li>
+<li>Training completion</li>
+<li>Support transition</li>
+</ul>
+<h3 id="project-closure">Project Closure</h3>
+<ul>
+<li>Lessons learned documentation</li>
+<li>Success metrics reporting</li>
+<li>Follow-up planning</li>
+</ul>
+<h3 id="outcome-operational-system">Outcome: Operational System</h3>
+<ul>
+<li>Fully migrated Surpass implementation</li>
+<li>Trained customer team</li>
+<li>Established support channels</li>
+</ul>
+<h2 id="project-timeline">Project Timeline</h2>
+<p>A typical migration project follows this timeline:</p>
+<pre><code class="language-mermaid"><div class="mermaid">gantt
+    title Surpass Migration Timeline
+    dateFormat  YYYY-MM-DD
+    axisFormat %b %d
+    
+    section Discovery (Pre-Sales)
+    Business Context Assessment       :discovery1, 2023-10-01, 14d
+    Assessment Delivery Requirements  :discovery2, after discovery1, 14d
+    Technical Environment Analysis    :discovery3, after discovery2, 14d
+    Architecture Vision Document      :discovery4, after discovery3, 7d
+    
+    section Detailed Design
+    Business Requirements Gathering   :design1, after discovery4, 21d
+    Center/Subject Structure          :design2, after design1, 10d
+    Dependency Review 1               :milestone, after design2, 0d
+    Item Authoring Structure          :design3, after design2, 14d
+    Dependency Review 2               :milestone, after design3, 0d
+    Test Creation Structure           :design4, after design3, 14d
+    Dependency Review 3               :milestone, after design4, 0d
+    Test Administration Flow          :design5, after design4, 10d
+    Dependency Review 4               :milestone, after design5, 0d
+    Reporting Structure               :design6, after design5, 10d
+    Migration Path Determination      :design7, after design6, 7d
+    Migration Runbook Creation        :design8, after design7, 14d
+    
+    section Build & Configure
+    Environment Setup                 :build1, after design8, 7d
+    Migration Script Development      :build2, after build1, 21d
+    Test Item Creation                :build3, after build2, 14d
+    
+    section QA & Validation
+    Manual Testing                    :qa1, after build3, 14d
+    Automated Testing                 :qa2, after build3, 14d
+    Dependency Validation             :qa3, after qa1, 7d
+    Validation Report                 :qa4, after qa3, 7d
+    
+    section Go-Live
+    Production Migration              :golive1, after qa4, 5d
+    Knowledge Transfer                :golive2, after golive1, 10d
+    Project Closure                   :golive3, after golive2, 5d
+</div></code></pre>
+<h2 id="continuous-improvement">Continuous Improvement</h2>
+<p>Post-implementation review to enhance future migrations:</p>
+<ul>
+<li>Process improvement identification</li>
+<li>Framework enhancement recommendations</li>
+<li>Best practice documentation</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Chart Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            gantt: {
+                titleTopMargin: 25,
+                barHeight: 20,
+                barGap: 4,
+                topPadding: 50,
+                sidePadding: 75
+            }
+        });
+    </script>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .mermaid {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Gantt Chart Test</h1>
+    
+    <div class="mermaid">
+        gantt
+        title Migration Timeline
+        dateFormat YYYY-MM-DD
+        
+        Discovery & Planning :a1, 2023-01-01, 90d
+        Detailed Design      :a2, after a1, 60d
+        Building It          :a3, after a2, 30d
+        Testing              :a4, after a3, 15d
+        Going Live           :a5, after a4, 10d
+    </div>
+</body>
+</html>
